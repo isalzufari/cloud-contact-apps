@@ -13,21 +13,8 @@ class ContactApp extends React.Component {
 
     this.state = {
       authedUser: null,
+      initializing: true,
     };
-
-    this.onLoginSuccess = this.onLoginSuccess.bind(this);
-  }
-
-  async onLoginSuccess({ accessToken }) {
-    putAccessToken(accessToken);
-    const { data } = await getUserLogged();
-
-    this.setState(() => {
-      return {
-        authedUser: data,
-        initializing: true,
-      };
-    });
 
     this.onLoginSuccess = this.onLoginSuccess.bind(this);
     this.onLogout = this.onLogout.bind(this);
@@ -40,6 +27,17 @@ class ContactApp extends React.Component {
       return {
         authedUser: data,
         initializing: false
+      };
+    });
+  }
+
+  async onLoginSuccess({ accessToken }) {
+    putAccessToken(accessToken);
+    const { data } = await getUserLogged();
+
+    this.setState(() => {
+      return {
+        authedUser: data,
       };
     });
   }
